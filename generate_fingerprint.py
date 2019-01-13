@@ -1,17 +1,22 @@
 import json
 import numpy as np
 from game2048.game import Game
+import tensorflow as tf
 
 
 def generate_fingerprint(AgentClass, **kwargs):
+    sess = tf.Session()
     with open("board_cases.json") as f:
         board_json = json.load(f)
 
     game = Game(size=4, enable_rewrite_board=True)
-    agent = AgentClass(game=game, **kwargs)
+    agent = AgentClass(game=game, sess=sess)
+    agent.build()
 
     trace = []
-    for board in board_json:
+    num = len(board_json)
+    for index, board in enumerate(board_json):
+        print('{} left.'.format(num - index))
         game.board = np.array(board)
         direction = agent.step()
         trace.append(direction)
@@ -24,7 +29,7 @@ if __name__ == '__main__':
 
     '''====================
     Use your own agent here.'''
-    from game2048.agents import ExpectiMaxAgent as TestAgent
+    from my_agent import MyAgent as TestAgent
     '''===================='''
 
     fingerprint = generate_fingerprint(TestAgent)

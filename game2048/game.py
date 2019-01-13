@@ -5,7 +5,8 @@ import numpy as np
 
 class Game:
 
-    def __init__(self, size=4, score_to_win=None, rate_2=0.5, random=False, enable_rewrite_board=False):
+    def __init__(
+        self, size=4, target=10, score_to_win=None, rate_2=0.5, random=False, enable_rewrite_board=False):
         '''
 
         :param size: the size of the board
@@ -19,8 +20,7 @@ class Game:
         self.score_to_win = score_to_win
         self.__rate_2 = rate_2
         if random:
-            self.__board = \
-                2 ** np.random.randint(1, 10, size=(self.size, self.size))
+            self.__board = 2 ** np.random.randint(1, target, size=(self.size, self.size))
             self.__end = False
         else:
             self.__board = np.zeros((self.size, self.size))
