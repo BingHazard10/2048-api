@@ -36,7 +36,7 @@ class MyAgent(Agent):
         hidden_units2 = 512
         drop_prob = 0.3
         regularizer = tf.contrib.layers.l2_regularizer(weight_decay)
-        self.input_data = tf.placeholder(dtype=tf.float32, shape=[None, 4, 4, 10])
+        self.input_data = tf.placeholder(dtype=tf.float32, shape=[None, 4, 4, 11])
 
         with tf.variable_scope('conv' + self.name):
             conv41 = tf.layers.conv2d(self.input_data, filters, (4, 1), padding='same', strides=(1, 1),
@@ -63,11 +63,11 @@ class MyAgent(Agent):
 
     def _board2onehot(self, board):
         board = np.log2(np.maximum(board, 1)).astype(np.int32)
-        board_onthot = np.zeros((board.shape[0], 4, 4, 10), dtype=np.int32)
+        board_onthot = np.zeros((board.shape[0], 4, 4, 11), dtype=np.int32)
         for k in range(board.shape[0]):
             for i in range(4):
                 for j in range(4):
-                    value = board[k, i, j] if board[k, i, j] < 10 else 9
+                    value = board[k, i, j] if board[k, i, j] < 11 else 10
                     board_onthot[k, i, j, value] = 1
         return board_onthot
 
